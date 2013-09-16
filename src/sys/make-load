@@ -1,0 +1,13 @@
+#!/bin/sh -e
+
+ld="`head -n 1 conf-ld`"
+strip="`head -n 1 conf-stripbins`"
+test -n "$strip" || strip="echo Not stripping"
+
+cat warn-auto.sh
+echo 'main="$1" ; shift'
+echo -n "$ld "
+test -f flag-allstatic || { echo -n '-Wl,--allow-shlib-undefined ' ; ./stupid < path-library.so | while read dir ; do echo -n "-L $dir " ; done ; }
+./stupid < path-library | while read dir ; do echo -n "-L $dir " ; done
+echo '-L . -o "$main" "$main".o ${1+"$@"}'
+echo exec "$strip" '"$main"'

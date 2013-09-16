@@ -1,0 +1,24 @@
+This is an example directory containing booting scripts
+that lead to s6-svscan running as process 1 in stage 2.
+
+Read them carefully and edit them to suit your needs.
+Some scripts are Linux-dependent; they can be easily
+adapted to other Unix systems.
+
+The skarnet.org servers actually run such a system, with
+scripts that are based on this model.
+
+As of s6-0.18, these scripts depend on yet-unreleased
+software such as s6-portable-utils and s6-linux-utils.
+This should not be a problem, the functionality exists
+in other software:
+ - generally, s6-foobar can be replaced with foobar
+   (s6-mount, s6-echo, etc.)
+ - s6-nuke -th can be replaced with kill -TERM -1 followed by
+   kill -CONT -1 followed by kill -HUP -1
+ - s6-nuke -k can be replaced with kill -KILL -1
+ - s6-hiercopy can be replaced with cp -a, if supported, or
+   cp -pPR of not)
+
+execline, however, cannot and should not be replaced.
+Shell scripts cannot perform the redirfd trick in stage 1.

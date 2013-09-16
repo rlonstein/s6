@@ -1,0 +1,12 @@
+#!/bin/sh
+
+ld="`head -n 1 conf-dynld`"
+cat warn-auto.sh
+echo 'main="$1" ; version="$2" ; shift ; shift ; major=`echo "$version" | cut -f1 -d.` ; minor=`echo "$version" | cut -f2 -d.`'
+echo "$ld" '-fPIC -shared -Wl,-h"$main.$major" -o "$main.$version" ${1+"$@"}'
+echo 'rm -f "$main.$major.$minor"{new} "$main.$major"{new} "$main"{new}'
+echo 'test "$major.$minor" != "$version" && { ln -s "$main.$version" "$main.$major.$minor"{new} ; mv -f "$main.$major.$minor"{new} "$main.$major.$minor" ; } || true'
+echo 'ln -s "$main.$major.$minor" "$main.$major"{new}'
+echo 'mv -f "$main.$major"{new} "$main.$major"'
+echo 'ln -s "$main.$major" "$main"{new}'
+echo 'mv -f "$main"{new} "$main"'

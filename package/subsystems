@@ -1,0 +1,6 @@
+config
+libs6
+libftrig
+pipe-tools
+supervision
+daemontools-extras

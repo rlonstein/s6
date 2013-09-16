@@ -1,0 +1,7 @@
+#!/bin/sh
+
+cc="`head -n 1 conf-cc`"
+cat warn-auto.sh
+echo -n "exec $cc -fPIC -c "
+./stupid < path-include | while read dir ; do echo -n "-I $dir " ; done
+echo '-I . ${1+"$@"}'
